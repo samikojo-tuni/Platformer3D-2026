@@ -1,0 +1,27 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Platformer3D"
+config/features=PackedStringArray("4.5", "Forward Plus")
+config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="Platformer3D"
+
+[layer_names]
+
+3d_physics/layer_1="Player"
+3d_physics/layer_2="Enemy"
+3d_physics/layer_3="World"
+3d_physics/layer_4="Interactable"
+3d_physics/layer_5="Hazard"
