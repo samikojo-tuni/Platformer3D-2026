@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://isifdpnnfqnj"]
+[gd_scene load_steps=4 format=3 uid="uid://isifdpnnfqnj"]
 
 [ext_resource type="PackedScene" uid="uid://cmkm6kjpnwcqo" path="res://Scenes/Level/LargeGrassBlock.tscn" id="1_rmvbh"]
 [ext_resource type="PackedScene" uid="uid://chw683nxpyqfn" path="res://Scenes/Level/SmallGrassBlock.tscn" id="2_kl0vg"]
+[ext_resource type="PackedScene" uid="uid://dhge6x15yiuxr" path="res://Scenes/Characters/knight.tscn" id="3_kl0vg"]
 
 [node name="Level1" type="Node3D"]
 
@@ -20,3 +21,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9224412, -0.09026027, -1.98
 
 [node name="block-grass-low5" parent="Platforms" instance=ExtResource("2_kl0vg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2249753, -0.09026027, -1.9810476)
+
+[node name="Knight" parent="." instance=ExtResource("3_kl0vg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21273787, 0.99127126, 0.11725044)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8659468, 0.500136, 0, -0.500136, 0.8659468, 0, 3.4997342, 3.7015982)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.9999619, 0.008726664, -1.1812394e-07, -0.005895562, 0.67556447, 0.7372773, 0.0064340513, -0.73724926, 0.6755902, 0, 0, 0)
