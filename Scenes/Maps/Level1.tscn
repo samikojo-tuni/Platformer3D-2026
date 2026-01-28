@@ -9,6 +9,7 @@
 [node name="Platforms" type="Node3D" parent="."]
 
 [node name="block-grass-large2" parent="Platforms" instance=ExtResource("1_rmvbh")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0)
 
 [node name="block-grass-low2" parent="Platforms" instance=ExtResource("2_kl0vg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3773859, -0.09026027, 2.2053175)

@@ -6,8 +6,18 @@ namespace GA.Platformer3D
 	public partial class PlayerCharacter : Character
 	{
 
-		// TODO: Refactor this. Move common code (between PlayerCharacter and EnemyCharacter) to the 
-		// base class.
+		public override void _Process(double delta)
+		{
+			bool isOnFloor = IsOnFloor();
+			if (isOnFloor && Input.IsActionJustPressed(InputConfig.STRIKE_NAME))
+			{
+				IsStriking = true;
+			}
+			else if (IsStriking && Input.IsActionJustReleased(InputConfig.STRIKE_NAME))
+			{
+				IsStriking = false;
+			}
+		}
 
 		/// <summary>
 		/// Physics calculations are performed in this method.
@@ -17,21 +27,31 @@ namespace GA.Platformer3D
 		{
 			Vector3 velocity = Velocity;
 
+			bool isOnFloor = IsOnFloor();
+
 			// Add the gravity.
-			if (!IsOnFloor())
+			if (!isOnFloor)
 			{
 				velocity += GetGravity() * (float)delta;
 			}
 
 			// Handle Jump.
-			if (Input.IsActionJustPressed("jump") && IsOnFloor())
+			if (Input.IsActionJustPressed(InputConfig.JUMP_NAME) && isOnFloor && !IsStriking)
 			{
 				velocity.Y = JumpVelocity;
+				IsJumping = true;
+			}
+			else if (IsJumping && isOnFloor)
+			{
+				// Character landed.
+				IsJumping = false;
 			}
 
 			// Get the input direction and handle the movement/deceleration.
 			// As good practice, you should replace UI actions with custom gameplay actions.
-			Vector2 inputDir = Input.GetVector("left", "right", "up", "down");			
+			Vector2 inputDir = Input.GetVector(InputConfig.MOVE_LEFT_NAME, InputConfig.MOVE_RIGHT_NAME,
+				InputConfig.MOVE_UP_NAME, InputConfig.MOVE_DOWN_NAME, InputConfig.DEAD_ZONE);
+
 			Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 			if (direction != Vector3.Zero)
 			{
@@ -41,7 +61,7 @@ namespace GA.Platformer3D
 				// There's input. Rotate character.
 				if (CharacterRig != null)
 				{
-					Vector3 targetDirection =  new Vector3(direction.X, 0, direction.Z);
+					Vector3 targetDirection = new Vector3(direction.X, 0, direction.Z);
 					float targetAngle = Mathf.Atan2(-targetDirection.X, -targetDirection.Z);
 					Quaternion targetRotation = new Quaternion(Vector3.Up, targetAngle);
 					CharacterRig.Quaternion = CharacterRig.Quaternion.Slerp(targetRotation, RotationSpeed * (float)delta);

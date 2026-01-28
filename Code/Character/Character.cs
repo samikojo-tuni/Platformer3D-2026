@@ -10,6 +10,21 @@ namespace GA.Platformer3D
 		[Export] private float _rotationSpeed = 15f;
 
 		/// <summary>
+		/// Indicates if the character is currently jumping.
+		/// </summary>
+		public bool IsJumping { get; protected set; } = false;
+
+		/// <summary>
+		/// Is the character striking with the sword currently.
+		/// </summary>
+		public bool IsStriking { get; protected set; } = false;
+
+		/// <summary>
+		/// Is the character shooting currently.
+		/// </summary>
+		public bool IsShooting { get; protected set; }
+
+		/// <summary>
 		/// A reference to the character rig.
 		/// </summary>
 		public Node3D CharacterRig => _rig;
