@@ -10,6 +10,15 @@ namespace GA.Platformer3D
 		[Export] private float _rotationSpeed = 15f;
 
 		/// <summary>
+		/// Character's health
+		/// </summary>
+		public IHealth Health
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// Indicates if the character is currently jumping.
 		/// </summary>
 		public bool IsJumping { get; protected set; } = false;
@@ -57,6 +66,12 @@ namespace GA.Platformer3D
 				// TODO: Validate the value before setting it. Notify about the change is nesessary.
 				_jumpVelocity = value;
 			}
+		}
+
+		public override void _Ready()
+		{
+			// TODO: Replace with an extensions method which doensn't use the path.
+			Health = GetNode<IHealth>("Health");
 		}
 	}
 }

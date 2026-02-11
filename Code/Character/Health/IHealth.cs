@@ -14,6 +14,8 @@ namespace GA.Platformer3D
 
 		int MaxHP { get; }
 
+		int InitialHP { get; }
+
 		bool IsAlive { get; }
 
 		bool IsImmortal { get; }
