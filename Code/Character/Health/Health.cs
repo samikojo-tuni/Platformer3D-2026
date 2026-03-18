@@ -1,12 +1,10 @@
+using System;
 using Godot;
 
 namespace GA.Platformer3D
 {
 	public partial class Health : Node, IHealth
 	{
-		[Signal]
-		public delegate void HealthChangedEventHandler(int currentHP);
-
 		[Export]
 		private int _maxHP = 10;
 
@@ -15,14 +13,18 @@ namespace GA.Platformer3D
 
 		private int _currentHP = 0;
 
+		public event Action<int, int> HealthChanged;
+
 		public int CurrentHP
 		{
 			get => _currentHP;
 			// TODO: Does this really need to be public? Probably not.
 			set
 			{
+				int previousHP = _currentHP;
 				_currentHP = Mathf.Clamp(value, 0, MaxHP);
-				EmitSignal(SignalName.HealthChanged, _currentHP);
+				// Invoke the event if it is not null.
+				HealthChanged?.Invoke(previousHP, _currentHP);
 			}
 		}
 
@@ -41,6 +43,13 @@ namespace GA.Platformer3D
 		{
 			get;
 			set;
+		}
+
+		public override void _Ready()
+		{
+			base._Ready();
+
+			CurrentHP = InitialHP;
 		}
 
 		public void Heal(int amount)

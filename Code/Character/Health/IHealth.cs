@@ -1,3 +1,5 @@
+using System;
+
 namespace GA.Platformer3D
 {
 
@@ -6,6 +8,10 @@ namespace GA.Platformer3D
 		// If you define the get accessor only, it leaves it up to the implementor 
 		// if they want to add a public set accessor as well. Only get is required
 		// by the interface.
+
+		// Action is C#'s predefined delegate type.
+		// For this event, parameters are previous health and current health.
+		event Action<int, int> HealthChanged;
 
 		/// <summary>
 		/// Returns the current HP amount.

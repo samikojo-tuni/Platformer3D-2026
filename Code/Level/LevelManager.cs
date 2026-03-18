@@ -1,3 +1,4 @@
+using GA.Platformer3D.UI;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,15 @@ namespace GA.Platformer3D
 		[Export] private Node3D _projectileParent = null;
 		[Export] private int _projectilePoolCapacity = 10;
 		[Export] private bool _canGrow = false;
+		[Export] private PlayerCharacter _player = null;
+		[Export] private MainUI _mainUI = null;
+		[Export] private FollowCamera _followCamera = null;
 
 		private ProjectilePool _projectilePool = null;
+
+		public PlayerCharacter PlayerCharacter => _player;
+		public FollowCamera Camera => _followCamera;
+		public MainUI MainUI => _mainUI;
 
 		public bool UseProjectilePool
 		{

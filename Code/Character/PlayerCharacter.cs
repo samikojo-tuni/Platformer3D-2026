@@ -5,6 +5,19 @@ namespace GA.Platformer3D
 {
 	public partial class PlayerCharacter : Character
 	{
+		// For testing pusposes only! Pressing X causes player to take damage.
+		public override void _Input(InputEvent @event)
+		{
+			base._Input(@event);
+
+			if (@event is InputEventKey keyEvent)
+			{
+				if (keyEvent.Pressed && keyEvent.Keycode == Key.X)
+				{
+					Health?.TakeDamage(1);
+				}
+			}
+		}
 
 		public override void _Process(double delta)
 		{

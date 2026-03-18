@@ -1,16 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://isifdpnnfqnj"]
+[gd_scene load_steps=9 format=3 uid="uid://isifdpnnfqnj"]
 
 [ext_resource type="Script" uid="uid://bpwpogv0hwddq" path="res://Code/Level/LevelManager.cs" id="1_88msy"]
 [ext_resource type="PackedScene" uid="uid://cmkm6kjpnwcqo" path="res://Scenes/Level/LargeGrassBlock.tscn" id="1_rmvbh"]
 [ext_resource type="PackedScene" uid="uid://chw683nxpyqfn" path="res://Scenes/Level/SmallGrassBlock.tscn" id="2_kl0vg"]
 [ext_resource type="PackedScene" uid="uid://c2614yxdyyexh" path="res://Scenes/Characters/Projectile.tscn" id="2_phabk"]
 [ext_resource type="PackedScene" uid="uid://dhge6x15yiuxr" path="res://Scenes/Characters/knight.tscn" id="3_kl0vg"]
+[ext_resource type="Script" uid="uid://cy8sqhskbcqxi" path="res://Code/Level/FollowCamera.cs" id="6_phabk"]
+[ext_resource type="Script" uid="uid://dvm6rmfvmuwmq" path="res://Code/UI/MainUI.cs" id="7_u76k7"]
+[ext_resource type="Texture2D" uid="uid://ixv8lropxyfg" path="res://Art/UI/heart.png" id="8_jqawo"]
 
-[node name="Level1" type="Node3D" node_paths=PackedStringArray("_projectileParent")]
+[node name="Level1" type="Node3D" node_paths=PackedStringArray("_projectileParent", "_player", "_mainUI", "_followCamera")]
 script = ExtResource("1_88msy")
+_useProjectilePool = true
 _projectileScene = ExtResource("2_phabk")
 _projectileParent = NodePath("ProjectileParent")
 _projectilePoolCapacity = 5
+_player = NodePath("Knight")
+_mainUI = NodePath("MainUI")
+_followCamera = NodePath("Camera3D")
 
 [node name="Platforms" type="Node3D" parent="."]
 
@@ -30,12 +37,40 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9224412, -0.09026027, -1.98
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2249753, -0.09026027, -1.9810476)
 
 [node name="Knight" parent="." instance=ExtResource("3_kl0vg")]
+physics_interpolation_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21273787, 0.99127126, 0.11725044)
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("_target")]
 transform = Transform3D(1, 0, 0, 0, 0.8659468, 0.500136, 0, -0.500136, 0.8659468, 0, 3.4997342, 3.7015982)
+script = ExtResource("6_phabk")
+_target = NodePath("../Knight")
+_offset = Vector3(0, 4, 4)
+_shakeIntensity = 0.3
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.9999619, 0.008726664, -1.1812394e-07, -0.005895562, 0.67556447, 0.7372773, 0.0064340513, -0.73724926, 0.6755902, 0, 0, 0)
 
 [node name="ProjectileParent" type="Node3D" parent="."]
+
+[node name="MainUI" type="CanvasLayer" parent="." node_paths=PackedStringArray("_heartsContainer")]
+script = ExtResource("7_u76k7")
+_heartsContainer = NodePath("Control/HBoxContainer")
+_heartTexture = ExtResource("8_jqawo")
+
+[node name="Control" type="Control" parent="MainUI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUI/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -500.0
+offset_bottom = 16.0
+grow_horizontal = 0
+alignment = 2
