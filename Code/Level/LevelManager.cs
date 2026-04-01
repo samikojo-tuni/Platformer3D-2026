@@ -2,7 +2,6 @@ using GA.Common.Messaging;
 using GA.Platformer3D.UI;
 using Godot;
 using System;
-using System.Collections.Generic;
 
 namespace GA.Platformer3D
 {

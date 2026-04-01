@@ -1,9 +1,10 @@
+using GA.Platformer3D.Save;
 using Godot;
 using System;
 
 namespace GA.Platformer3D
 {
-	public partial class PlayerCharacter : Character
+	public partial class PlayerCharacter : Character, ISaveable<PlayerData>
 	{
 		// For testing pusposes only! Pressing X causes player to take damage.
 		public override void _Input(InputEvent @event)
@@ -21,6 +22,8 @@ namespace GA.Platformer3D
 
 		public override void _Process(double delta)
 		{
+			base._Process(delta);
+
 			bool isOnFloor = IsOnFloor();
 			if (isOnFloor && Input.IsActionJustPressed(InputConfig.STRIKE_NAME))
 			{
@@ -98,5 +101,16 @@ namespace GA.Platformer3D
 			Velocity = velocity;
 			MoveAndSlide();
 		}
+
+		public PlayerData SaveState()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void LoadState(PlayerData state)
+		{
+			throw new NotImplementedException();
+		}
+
 	}
 }

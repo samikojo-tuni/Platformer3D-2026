@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b2m0og5bq1jkf" path="res://Code/Character/EnemyCharacter.cs" id="1_bq5lu"]
 [ext_resource type="ArrayMesh" uid="uid://bl1s02v3mssfm" path="res://Art/meshes/skeleton/Skeleton_keletonMesh.res" id="1_i1e3g"]
-[ext_resource type="ArrayMesh" uid="uid://dueo7ha7oycnu" path="res://Art/meshes/skeleton/Skeleton_SwordSkeletonMesh.res" id="2_rrbwr"]
+[ext_resource type="PackedScene" uid="uid://bc20h2yha7m5y" path="res://Scenes/Characters/SkeletonSword.tscn" id="3_q6fjl"]
 [ext_resource type="ArrayMesh" uid="uid://bljynxtrlv8lq" path="res://Art/meshes/skeleton/Skeleton_PistolMesh.res" id="3_wmymg"]
 [ext_resource type="Animation" uid="uid://b3o26q3xc1lhg" path="res://Art/animations/skeleton/idle.res" id="4_ng2ct"]
 [ext_resource type="Animation" uid="uid://cfhwutl3ntldn" path="res://Art/animations/skeleton/in_air.res" id="5_gno4d"]
@@ -139,6 +139,8 @@ radius = 0.42041016
 height = 1.671875
 
 [node name="Skeleton" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 21
 script = ExtResource("1_bq5lu")
 
 [node name="SkeletonRig" type="Node3D" parent="."]
@@ -392,10 +394,7 @@ transform = Transform3D(-0.03502736, 0.86790884, -0.49548742, 0.7175769, 0.36692
 bone_name = "item.R"
 bone_idx = 14
 
-[node name="SwordSkeleton" type="MeshInstance3D" parent="SkeletonRig/Skeleton3D/SwordAttachment"]
-transform = Transform3D(0.99999976, 0, 0, 0, -4.3711378e-08, -0.99999994, 0, 0.99999976, -4.3711385e-08, 0, 0, 0)
-mesh = ExtResource("2_rrbwr")
-skeleton = NodePath("")
+[node name="SwordSkeleton" parent="SkeletonRig/Skeleton3D/SwordAttachment" instance=ExtResource("3_q6fjl")]
 
 [node name="PistolAttachment" type="BoneAttachment3D" parent="SkeletonRig/Skeleton3D"]
 transform = Transform3D(-0.6017706, -0.75082654, 0.2722712, -0.7270771, 0.3739404, -0.5757835, 0.33050078, -0.5444519, -0.770935, -0.27211016, 0.92504925, -0.45790982)

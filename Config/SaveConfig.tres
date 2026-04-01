@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SaveConfig" load_steps=2 format=3 uid="uid://c2eb2bvd3ck28"]
+
+[ext_resource type="Script" uid="uid://pxk34dkpy348" path="res://Code/Config/SaveConfig.cs" id="1_fgkwf"]
+
+[resource]
+script = ExtResource("1_fgkwf")
+DefaultSaveBackend = 3
+SaveLocation = "user://Save"
+metadata/_custom_type_script = "uid://pxk34dkpy348"

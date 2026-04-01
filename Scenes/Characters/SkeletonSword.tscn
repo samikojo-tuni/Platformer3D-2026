@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc20h2yha7m5y"]
+
+[ext_resource type="ArrayMesh" uid="uid://dueo7ha7oycnu" path="res://Art/meshes/skeleton/Skeleton_SwordSkeletonMesh.res" id="1_gq5qs"]
+[ext_resource type="Script" uid="uid://wsn83ptsfr8s" path="res://Code/Character/Sword.cs" id="2_e2hi5"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpn7s"]
+radius = 0.045898438
+height = 0.6602173
+
+[node name="SwordSkeleton" type="MeshInstance3D"]
+transform = Transform3D(0.99999976, 0, 0, 0, -4.3711378e-08, -0.99999994, 0, 0.99999976, -4.3711385e-08, 0, 0, 0)
+mesh = ExtResource("1_gq5qs")
+skeleton = NodePath("")
+script = ExtResource("2_e2hi5")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39541626, 3.5527137e-15)
+shape = SubResource("CapsuleShape3D_rpn7s")

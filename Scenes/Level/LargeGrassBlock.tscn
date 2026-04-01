@@ -3,3 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://876t26cqnj2w" path="res://Art/block-grass-large.glb" id="1_p2fu7"]
 
 [node name="block-grass-large2" instance=ExtResource("1_p2fu7")]
+
+[node name="StaticBody3D" parent="block-grass-large" index="0"]
+collision_layer = 4
+collision_mask = 3

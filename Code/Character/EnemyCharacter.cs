@@ -1,19 +1,21 @@
 using GA.Platformer3D;
+using GA.Platformer3D.Save;
 using GA.Platformer3D.UI;
 using Godot;
 using System;
 
-public partial class EnemyCharacter : Character
+public partial class EnemyCharacter : Character, ISaveable<EnemyData>
 {
 	[Export] private HealthBar _healthBar = null;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public void LoadState(EnemyData state)
 	{
+		throw new NotImplementedException();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public EnemyData SaveState()
 	{
+		throw new NotImplementedException();
 	}
+
 }
