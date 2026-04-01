@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://bpwpogv0hwddq" path="res://Code/Level/LevelManager.cs" id="1_88msy"]
 [ext_resource type="PackedScene" uid="uid://cmkm6kjpnwcqo" path="res://Scenes/Level/LargeGrassBlock.tscn" id="1_rmvbh"]
-[ext_resource type="PackedScene" uid="uid://chw683nxpyqfn" path="res://Scenes/Level/SmallGrassBlock.tscn" id="2_kl0vg"]
 [ext_resource type="PackedScene" uid="uid://c2614yxdyyexh" path="res://Scenes/Characters/Projectile.tscn" id="2_phabk"]
 [ext_resource type="PackedScene" uid="uid://dhge6x15yiuxr" path="res://Scenes/Characters/knight.tscn" id="3_kl0vg"]
 [ext_resource type="Script" uid="uid://cy8sqhskbcqxi" path="res://Code/Level/FollowCamera.cs" id="6_phabk"]
 [ext_resource type="Script" uid="uid://dvm6rmfvmuwmq" path="res://Code/UI/MainUI.cs" id="7_u76k7"]
+[ext_resource type="PackedScene" uid="uid://bixgs3d6uuawi" path="res://Scenes/Characters/skeleton.tscn" id="8_415hl"]
 [ext_resource type="Texture2D" uid="uid://ixv8lropxyfg" path="res://Art/UI/heart.png" id="8_jqawo"]
 
 [node name="Level1" type="Node3D" node_paths=PackedStringArray("_projectileParent", "_player", "_mainUI", "_followCamera")]
@@ -24,17 +24,14 @@ _followCamera = NodePath("Camera3D")
 [node name="block-grass-large2" parent="Platforms" instance=ExtResource("1_rmvbh")]
 transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, 0)
 
-[node name="block-grass-low2" parent="Platforms" instance=ExtResource("2_kl0vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3773859, -0.09026027, 2.2053175)
+[node name="block-grass-large3" parent="Platforms" instance=ExtResource("1_rmvbh")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 0, -9.832931)
 
-[node name="block-grass-low3" parent="Platforms" instance=ExtResource("2_kl0vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9224412, -0.09026027, 2.0327609)
+[node name="block-grass-large4" parent="Platforms" instance=ExtResource("1_rmvbh")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, -10.443106, 0, -9.832931)
 
-[node name="block-grass-low4" parent="Platforms" instance=ExtResource("2_kl0vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9224412, -0.09026027, -1.9810476)
-
-[node name="block-grass-low5" parent="Platforms" instance=ExtResource("2_kl0vg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2249753, -0.09026027, -1.9810476)
+[node name="block-grass-large5" parent="Platforms" instance=ExtResource("1_rmvbh")]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, -10.443106, 0, 0.07036018)
 
 [node name="Knight" parent="." instance=ExtResource("3_kl0vg")]
 physics_interpolation_mode = 1
@@ -74,3 +71,6 @@ offset_left = -500.0
 offset_bottom = 16.0
 grow_horizontal = 0
 alignment = 2
+
+[node name="Skeleton" parent="." instance=ExtResource("8_415hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.148399, 1.5307703, -1.8626451e-09)

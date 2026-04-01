@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://bixgs3d6uuawi"]
+[gd_scene load_steps=19 format=3 uid="uid://bixgs3d6uuawi"]
 
+[ext_resource type="Script" uid="uid://b2m0og5bq1jkf" path="res://Code/Character/EnemyCharacter.cs" id="1_bq5lu"]
 [ext_resource type="ArrayMesh" uid="uid://bl1s02v3mssfm" path="res://Art/meshes/skeleton/Skeleton_keletonMesh.res" id="1_i1e3g"]
 [ext_resource type="ArrayMesh" uid="uid://dueo7ha7oycnu" path="res://Art/meshes/skeleton/Skeleton_SwordSkeletonMesh.res" id="2_rrbwr"]
 [ext_resource type="ArrayMesh" uid="uid://bljynxtrlv8lq" path="res://Art/meshes/skeleton/Skeleton_PistolMesh.res" id="3_wmymg"]
@@ -11,6 +12,9 @@
 [ext_resource type="Animation" uid="uid://deuu8y71ikjb" path="res://Art/animations/skeleton/swing.res" id="9_trtmc"]
 [ext_resource type="Animation" uid="uid://cnr52beleyyob" path="res://Art/animations/skeleton/t_pose.res" id="10_5y3rj"]
 [ext_resource type="Animation" uid="uid://2act0y3qdhwd" path="res://Art/animations/skeleton/walk.res" id="11_vpfro"]
+[ext_resource type="Script" uid="uid://d24ilm3eqspl5" path="res://Code/Character/Health/Health.cs" id="12_yjymp"]
+[ext_resource type="Script" uid="uid://dctqoruw16du" path="res://Code/UI/HealthBar.cs" id="14_q6fjl"]
+[ext_resource type="Texture2D" uid="uid://ixv8lropxyfg" path="res://Art/UI/heart.png" id="15_q6fjl"]
 
 [sub_resource type="Skin" id="Skin_jmp53"]
 resource_name = "Skin"
@@ -130,7 +134,12 @@ _data = {
 &"walk": ExtResource("11_vpfro")
 }
 
-[node name="Skeleton" type="Node3D"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2ccbk"]
+radius = 0.42041016
+height = 1.671875
+
+[node name="Skeleton" type="CharacterBody3D"]
+script = ExtResource("1_bq5lu")
 
 [node name="SkeletonRig" type="Node3D" parent="."]
 
@@ -403,3 +412,16 @@ libraries = {
 &"": SubResource("AnimationLibrary_xuf14")
 }
 autoplay = "idle"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.83203125, 0)
+shape = SubResource("CapsuleShape3D_2ccbk")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("12_yjymp")
+_maxHP = 3
+_initialHP = 3
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("14_q6fjl")
+_heartTexture = ExtResource("15_q6fjl")
