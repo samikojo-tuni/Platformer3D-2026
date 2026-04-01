@@ -1,4 +1,5 @@
 using System;
+using GA.Platformer3D.Messages;
 using Godot;
 
 namespace GA.Platformer3D
@@ -24,7 +25,10 @@ namespace GA.Platformer3D
 				int previousHP = _currentHP;
 				_currentHP = Mathf.Clamp(value, 0, MaxHP);
 				// Invoke the event if it is not null.
-				HealthChanged?.Invoke(previousHP, _currentHP);
+				// HealthChanged?.Invoke(previousHP, _currentHP);
+				// Combine with the Pool
+				HealthChangedMessage message = new HealthChangedMessage(this);
+				LevelManager.Active.MessageBus.Send(message);
 			}
 		}
 

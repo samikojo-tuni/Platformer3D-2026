@@ -1,4 +1,6 @@
 using GA.Common;
+using GA.Common.Messaging;
+using GA.Platformer3D.Messages;
 using Godot;
 using System;
 
@@ -11,6 +13,8 @@ namespace GA.Platformer3D.UI
 
 		private IHealth _playerHealth = null;
 
+		private ISubscription<HealthChangedMessage> _healthChangedSubscription = null;
+
 		public override void _EnterTree()
 		{
 			base._EnterTree();
@@ -20,9 +24,15 @@ namespace GA.Platformer3D.UI
 
 		public override void _ExitTree()
 		{
-			if (_playerHealth != null)
+			// if (_playerHealth != null)
+			// {
+			// 	_playerHealth.HealthChanged -= UpdateHearts;
+			// }
+
+			if (_healthChangedSubscription != null)
 			{
-				_playerHealth.HealthChanged -= UpdateHearts;
+				LevelManager.Active.MessageBus.Unsubscribe(_healthChangedSubscription);
+				_healthChangedSubscription = null;
 			}
 		}
 
@@ -30,7 +40,11 @@ namespace GA.Platformer3D.UI
 		{
 			_playerHealth = LevelManager.Active.PlayerCharacter.Health;
 			InitializeHearts(_playerHealth);
-			_playerHealth.HealthChanged += UpdateHearts;
+			// _playerHealth.HealthChanged += UpdateHearts;
+			_healthChangedSubscription = LevelManager.Active.MessageBus.Subscribe<HealthChangedMessage>(message =>
+			{
+				UpdateHearts(message.Health.CurrentHP, message.Health.CurrentHP);
+			});
 		}
 
 		public void InitializeHearts(IHealth health)
@@ -59,7 +73,7 @@ namespace GA.Platformer3D.UI
 			UpdateHearts(health.CurrentHP, health.CurrentHP);
 		}
 
-		public void UpdateHearts(int previousHP, int currentHP)
+		private void UpdateHearts(int previousHP, int currentHP)
 		{
 			if (_heartsContainer == null)
 			{

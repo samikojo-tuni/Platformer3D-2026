@@ -1,3 +1,5 @@
+using GA.Common.Messaging;
+using GA.Platformer3D.Messages;
 using Godot;
 using System;
 
@@ -16,6 +18,8 @@ namespace GA.Platformer3D
 		private float _shakeTimer = 0f;
 		private IHealth _playerHealth = null;
 
+		private ISubscription<HealthChangedMessage> _healthChangedSubscription = null;
+
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
@@ -32,16 +36,25 @@ namespace GA.Platformer3D
 
 		public override void _ExitTree()
 		{
-			if (_playerHealth != null)
+			// if (_playerHealth != null)
+			// {
+			// 	_playerHealth.HealthChanged -= OnPlayerHealthChanged;
+			// }
+			if (_healthChangedSubscription != null)
 			{
-				_playerHealth.HealthChanged -= OnPlayerHealthChanged;
+				LevelManager.Active.MessageBus.Unsubscribe(_healthChangedSubscription);
+				_healthChangedSubscription = null;
 			}
 		}
 
 		private void SubscribeToEvents()
 		{
-			_playerHealth = LevelManager.Active.PlayerCharacter.Health;
-			_playerHealth.HealthChanged += OnPlayerHealthChanged;
+			_healthChangedSubscription = LevelManager.Active.MessageBus.Subscribe<HealthChangedMessage>((message) =>
+			{
+				Shake(0.2f);
+			});
+			// _playerHealth = LevelManager.Active.PlayerCharacter.Health;
+			// _playerHealth.HealthChanged += OnPlayerHealthChanged;
 		}
 
 		private void OnPlayerHealthChanged(int previousHealth, int currentHealth)

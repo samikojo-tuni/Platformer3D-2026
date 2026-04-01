@@ -1,3 +1,4 @@
+using GA.Common.Messaging;
 using GA.Platformer3D.UI;
 using Godot;
 using System;
@@ -23,6 +24,12 @@ namespace GA.Platformer3D
 		public PlayerCharacter PlayerCharacter => _player;
 		public FollowCamera Camera => _followCamera;
 		public MainUI MainUI => _mainUI;
+
+		public MessageBus MessageBus
+		{
+			get;
+			private set;
+		}
 
 		public bool UseProjectilePool
 		{
@@ -69,6 +76,8 @@ namespace GA.Platformer3D
 			}
 
 			_projectilePool = new ProjectilePool(_projectileScene, _projectilePoolCapacity, _canGrow);
+
+			MessageBus = new MessageBus();
 		}
 
 		public Projectile SpawnProjectile(Vector3 position, Vector3 direction,
