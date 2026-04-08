@@ -29,11 +29,12 @@ public partial class GameManager : Node
 	#endregion
 
 	private int _score = 0;
+	private SceneTree _sceneTree = null;
 
 	public int Score
 	{
 		get { return _score; }
-		private set
+		set
 		{
 			_score = Mathf.Max(value, 0);
 			// TODO: Event or message
@@ -44,6 +45,18 @@ public partial class GameManager : Node
 	{
 		get;
 		private set;
+	}
+
+	public SceneTree SceneTree
+	{
+		get
+		{
+			if (_sceneTree == null)
+			{
+				_sceneTree = GetTree();
+			}
+			return _sceneTree;
+		}
 	}
 
 	private void Initialize()

@@ -78,5 +78,10 @@ namespace GA.Platformer3D
 			CurrentHP -= amount;
 			return true;
 		}
+
+		public void Restore(int currentHealth)
+		{
+			CurrentHP = currentHealth;
+		}
 	}
 }

@@ -38,5 +38,11 @@ namespace GA.Platformer3D
 		/// <param name="amount">The amount of damage applied.</param>
 		/// <returns>Wheter damage was applied or not.</returns>
 		bool TakeDamage(int amount);
+
+		/// <summary>
+		/// Restores the health to the desired value. Can be used with the save system.
+		/// </summary>
+		/// <param name="currentHealth">The health value to be restored.</param>
+		void Restore(int currentHealth);
 	}
 }

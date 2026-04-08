@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_fgkwf")
-DefaultSaveBackend = 3
+DefaultSaveBackend = 2
 SaveLocation = "user://Save"
 metadata/_custom_type_script = "uid://pxk34dkpy348"

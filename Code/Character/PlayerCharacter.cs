@@ -104,13 +104,22 @@ namespace GA.Platformer3D
 
 		public PlayerData SaveState()
 		{
-			throw new NotImplementedException();
+			return new PlayerData()
+			{
+				PositionX = GlobalPosition.X,
+				PositionY = GlobalPosition.Y,
+				PositionZ = GlobalPosition.Z,
+				CurrentHealth = Health?.CurrentHP ?? 0
+			};
 		}
 
 		public void LoadState(PlayerData state)
 		{
-			throw new NotImplementedException();
+			GlobalPosition = new Vector3(state.PositionX, state.PositionY, state.PositionZ);
+			if (Health != null)
+			{
+				Health.Restore(state.CurrentHealth);
+			}
 		}
-
 	}
 }

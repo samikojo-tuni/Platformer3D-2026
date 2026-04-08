@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://isifdpnnfqnj"]
+[gd_scene load_steps=11 format=3 uid="uid://isifdpnnfqnj"]
 
 [ext_resource type="Script" uid="uid://bpwpogv0hwddq" path="res://Code/Level/LevelManager.cs" id="1_88msy"]
 [ext_resource type="PackedScene" uid="uid://cmkm6kjpnwcqo" path="res://Scenes/Level/LargeGrassBlock.tscn" id="1_rmvbh"]
@@ -8,8 +8,10 @@
 [ext_resource type="Script" uid="uid://dvm6rmfvmuwmq" path="res://Code/UI/MainUI.cs" id="7_u76k7"]
 [ext_resource type="PackedScene" uid="uid://bixgs3d6uuawi" path="res://Scenes/Characters/skeleton.tscn" id="8_415hl"]
 [ext_resource type="Texture2D" uid="uid://ixv8lropxyfg" path="res://Art/UI/heart.png" id="8_jqawo"]
+[ext_resource type="PackedScene" uid="uid://itjxsd6okpl4" path="res://Scenes/UI/SaveWindow.tscn" id="9_jqawo"]
+[ext_resource type="PackedScene" uid="uid://e20mafn2b2fc" path="res://Scenes/UI/LoadWindow.tscn" id="10_415hl"]
 
-[node name="Level1" type="Node3D" node_paths=PackedStringArray("_projectileParent", "_player", "_mainUI", "_followCamera")]
+[node name="Level1" type="Node3D" node_paths=PackedStringArray("_projectileParent", "_player", "_mainUI", "_followCamera", "_saveWindow", "_loadWindow")]
 script = ExtResource("1_88msy")
 _useProjectilePool = true
 _projectileScene = ExtResource("2_phabk")
@@ -18,6 +20,8 @@ _projectilePoolCapacity = 5
 _player = NodePath("Knight")
 _mainUI = NodePath("MainUI")
 _followCamera = NodePath("Camera3D")
+_saveWindow = NodePath("SaveWindow")
+_loadWindow = NodePath("LoadWindow")
 
 [node name="Platforms" type="Node3D" parent="."]
 
@@ -74,3 +78,7 @@ alignment = 2
 
 [node name="Skeleton" parent="." instance=ExtResource("8_415hl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.148399, 1.5307703, -1.8626451e-09)
+
+[node name="SaveWindow" parent="." instance=ExtResource("9_jqawo")]
+
+[node name="LoadWindow" parent="." instance=ExtResource("10_415hl")]

@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.IO;
+using System.Collections.Generic;
+
 
 namespace GA.Platformer3D.Save
 {
@@ -17,14 +19,35 @@ namespace GA.Platformer3D.Save
 		private SaveBackend _backend = SaveBackend.None;
 		private string _saveLocation = null;
 		private ISaveSerializer _serializer = null;
+		private string _quickSaveSlot = null;
+
+		public string EnemyGroupName { get; }
 
 		public SaveManager(SaveConfig config)
 		{
 			_saveLocation = config.SaveLocation;
+			EnemyGroupName = config.EnemyGroupName;
+			_quickSaveSlot = config.QuickSaveSlot;
 			SetBackend(config.DefaultSaveBackend);
 		}
 
 		#region Public API
+
+		/// <summary>
+		/// Returns the slot names (filename without extension) of all saves on disk
+		/// that match the current backend's file extension.
+		/// </summary>
+		public string[] ListSaves()
+		{
+			string directory = ProjectSettings.GlobalizePath(_saveLocation);
+			if (!Directory.Exists(directory))
+			{
+				return Array.Empty<string>();
+			}
+
+			string[] files = Directory.GetFiles(directory, $"*.{_serializer.FileExtension}");
+			return Array.ConvertAll(files, file => Path.GetFileNameWithoutExtension(file));
+		}
 
 		public void SetBackend(SaveBackend backend)
 		{
@@ -82,7 +105,7 @@ namespace GA.Platformer3D.Save
 		#endregion Public API
 
 		#region Internal functionality
-		private static GameData CollectData()
+		private GameData CollectData()
 		{
 			GameData data = new GameData()
 			{
@@ -90,14 +113,58 @@ namespace GA.Platformer3D.Save
 				PlayerData = LevelManager.Active.PlayerCharacter.SaveState()
 			};
 
-			// TODO: Collect enemy data.
+			SceneTree sceneTree = GameManager.Instance.SceneTree;
+			if (sceneTree != null)
+			{
+				Godot.Collections.Array<Node> enemyNodes = sceneTree.GetNodesInGroup(EnemyGroupName);
+				foreach (Node enemyNode in enemyNodes)
+				{
+					if (enemyNode is EnemyCharacter enemy)
+					{
+						data.EnemyDataCollection.Add(enemy.SaveState());
+					}
+				}
+			}
 
 			return data;
 		}
 
-		private static void ApplyState(GameData data)
+		private void ApplyState(GameData data)
 		{
-			throw new NotImplementedException();
+			GameManager.Instance.Score = data.Score;
+
+			LevelManager.Active.PlayerCharacter.LoadState(data.PlayerData);
+
+			if (data.EnemyDataCollection.Count == 0)
+			{
+				// Nothing to restore!
+				return;
+			}
+
+			SceneTree tree = GameManager.Instance.SceneTree;
+			if (tree == null)
+			{
+				return;
+			}
+
+			Dictionary<string, EnemyData> enemyMap = new Dictionary<string, EnemyData>();
+			foreach (EnemyData enemyData in data.EnemyDataCollection)
+			{
+				enemyMap.Add(enemyData.Id, enemyData);
+			}
+
+			Godot.Collections.Array<Node> enemyNodes = tree.GetNodesInGroup(EnemyGroupName);
+			foreach (Node node in enemyNodes)
+			{
+				if (node is EnemyCharacter enemy)
+				{
+					string enemyID = enemy.GetPath().ToString();
+					if (enemyMap.ContainsKey(enemyID))
+					{
+						enemy.LoadState(enemyMap[enemyID]);
+					}
+				}
+			}
 		}
 
 		private string BuildPath(string saveSlotName)
@@ -122,12 +189,25 @@ namespace GA.Platformer3D.Save
 				case SaveBackend.Mock:
 					return new MockSerializer();
 				case SaveBackend.Json:
+					return new JsonSaveSerializer();
 				case SaveBackend.Binary:
+					return new BinarySaveSerializer();
 				case SaveBackend.None:
 				default:
 					return null;
 			}
 		}
+
+		public void QuickSave()
+		{
+			Save(_quickSaveSlot);
+		}
+
+		public void QuickLoad()
+		{
+			Load(_quickSaveSlot);
+		}
+
 		#endregion
 	}
 }

@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://itjxsd6okpl4"]
+
+[ext_resource type="Script" uid="uid://wgrpuya5mji5" path="res://Code/UI/SaveWindow.cs" id="1_ev8e1"]
+[ext_resource type="Script" uid="uid://beeprsgscno5" path="res://Code/UI/SaveSlotList.cs" id="2_lp2xd"]
+
+[node name="Window" type="Window" node_paths=PackedStringArray("_fileNameInput", "_slotList", "_saveButton", "_cancelButton")]
+oversampling_override = 1.0
+title = "Save Game"
+initial_position = 1
+size = Vector2i(300, 400)
+script = ExtResource("1_ev8e1")
+_fileNameInput = NodePath("VBoxContainer/LineEdit")
+_slotList = NodePath("VBoxContainer/ScrollContainer/SaveSlotList")
+_saveButton = NodePath("VBoxContainer/Buttons/SaveButton")
+_cancelButton = NodePath("VBoxContainer/Buttons/CloseButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SaveSlotNameLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Save slot name"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SaveSlotList" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_lp2xd")
+
+[node name="Buttons" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
+
+[node name="CloseButton" type="Button" parent="VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close"

@@ -17,6 +17,8 @@ namespace GA.Platformer3D
 		[Export] private PlayerCharacter _player = null;
 		[Export] private MainUI _mainUI = null;
 		[Export] private FollowCamera _followCamera = null;
+		[Export] private SaveWindow _saveWindow = null;
+		[Export] private LoadWindow _loadWindow = null;
 
 		private ProjectilePool _projectilePool = null;
 
@@ -77,7 +79,31 @@ namespace GA.Platformer3D
 			_projectilePool = new ProjectilePool(_projectileScene, _projectilePoolCapacity, _canGrow);
 
 			MessageBus = new MessageBus();
+
+			_saveWindow.Hide();
+			_loadWindow.Hide();
 		}
+
+		public override void _Input(InputEvent @event)
+		{
+			if (@event.IsActionPressed("QuickSave"))
+			{
+				GameManager.Instance.SaveManager.QuickSave();
+			}
+			else if (@event.IsActionPressed("QuickLoad"))
+			{
+				GameManager.Instance.SaveManager.QuickLoad();
+			}
+			else if (@event.IsActionPressed("Save"))
+			{
+				_saveWindow.Open();
+			}
+			else if (@event.IsActionPressed("Load"))
+			{
+				_loadWindow.Open();
+			}
+		}
+
 
 		public Projectile SpawnProjectile(Vector3 position, Vector3 direction,
 			uint collisionLayer, uint collisionMask)
